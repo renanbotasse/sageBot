@@ -1,0 +1,15 @@
+{
+  "name": "the_sage_bot",
+  "version": "1.0.0",
+  "description": "Telegram bot to random articles of wikipedia and create tales",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Renan Botasse <renanbotasse@gmail.com>",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.64.0"
+  }
+}
