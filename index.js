@@ -1,7 +1,8 @@
 require("dotenv").config();
+import { webhookCallback } from "grammy";
+
 const express = require("express");
 const expressApp = express();
-const path = require("path");
 const { bot } = require('./bot/index');
 
 const randomCommand = require("./handlers/commands/random");
@@ -47,4 +48,15 @@ bot.on('message', async (ctx) => {
     await unmatchedCommand(ctx);
 });
 
-bot.launch();
+if (process.env.NODE_ENV === "production") {
+    // Use Webhooks for the production server
+    app.use(express.json());
+    app.use(webhookCallback(bot, "express"));  
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Bot listening on port ${PORT}`);
+    });
+} else {
+    // Use Long Polling for development
+    bot.launch();
+}
