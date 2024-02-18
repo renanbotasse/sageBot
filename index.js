@@ -1,5 +1,5 @@
 require("dotenv").config();
-import { webhookCallback } from "grammy";
+const { webhookCallback } = require("grammy");
 
 const express = require("express");
 const expressApp = express();
