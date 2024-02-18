@@ -1,13 +1,52 @@
-const TelegramBot = require("node-telegram-bot-api");
+require("dotenv").config();
+const express = require("express");
+const expressApp = express();
+const path = require("path");
+const { bot } = require('./bot/index');
 
-const token = "6844843388:AAF_bUyerjlQQRNs-JPx9lOMZgrG2fEX4PI"; // Replace with your own bot token
-const bot = new TelegramBot(token, { polling: true });
+const randomCommand = require("./handlers/commands/random");
+const searchCommand = require("./handlers/commands/search");
+const sageCommand = require("./handlers/commands/sage");
+const taleCommand = require("./handlers/commands/tale");
+const helpCommand = require("./handlers/commands/help");
+const androidCommand = require("./handlers/commands/android");
+const startCommand = require("./handlers/commands/start");
+const { languageCommand, handleLanguageCallback } = require('./handlers/commands/language');
+const { saveLinkCommand, saveTaleCommand, saveListCommand } = require('./handlers/commands/save');
+const { savedLinkCommand, savedTaleCommand, savedListCommand } = require('./handlers/commands/saved');
+const deleteCommand = require("./handlers/commands/delete");
+const unmatchedCommand = require("./handlers/commands/unmatched");
 
-bot.on("message", (msg) => {
-    const chatId = msg.chat.id;
-    const messageText = msg.text;
+expressApp.use(express.static("static"));
+expressApp.use(express.json());
 
-    if (messageText === "/start") {
-        bot.sendMessage(chatId, "Welcome to the bot!");
-    }
+//wikipedia
+bot.command('random', randomCommand);
+bot.command('search', searchCommand);
+//cohere
+bot.command('sage', sageCommand);
+bot.command('tale', taleCommand);
+//system
+bot.command("help", helpCommand);
+bot.command('android', androidCommand);
+//db
+bot.command("start", startCommand);
+bot.command('language', languageCommand);
+bot.on('callback_query', handleLanguageCallback);
+bot.command(/save_link_\d+/, saveLinkCommand);
+bot.command(/save_list_\d+/, saveListCommand);
+bot.command(/save_tale_\d+/, saveTaleCommand);
+
+bot.command("saved_link", savedLinkCommand);
+bot.command("saved_list", savedListCommand);
+bot.command("saved_tale", savedTaleCommand);
+
+bot.command(/delete_\d+/, deleteCommand);
+
+// Handle unmatched commands or messages without any command
+bot.on('message', async (ctx) => {
+    // Respond to the user indicating that the command is not recognized
+    await unmatchedCommand(ctx);
 });
+
+bot.launch();
