@@ -43,9 +43,7 @@ bot.command("saved_tale", savedTaleCommand);
 
 bot.command(/delete_\d+/, deleteCommand);
 
-// Handle unmatched commands or messages without any command
 bot.on('message', async (ctx) => {
-    // Respond to the user indicating that the command is not recognized
     await unmatchedCommand(ctx);
 });
 

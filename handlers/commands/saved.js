@@ -4,18 +4,15 @@ async function savedListCommand(ctx) {
     const chatId = ctx.chat.id;
 
     try {
-        // Find the user in the database
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {
             let message = "Here are the items you've saved:\n";
-            // Check if there are saved links
             if (user.lists.length > 0) {
                 message += "\nSaved List:\n";
                 for (let list of user.lists) {
                     message += `- ${list.text}\n`;
                 }
             }
-            // Send the message
             bot.telegram.sendMessage(chatId, message);
         } else {
             bot.telegram.sendMessage(chatId, "User not found. Don't worry, I'll keep searching until I find what you need! 💪");
@@ -29,10 +26,8 @@ async function savedListCommand(ctx) {
 async function savedLinkCommand(ctx) {
     const chatId = ctx.chat.id;
     try {
-        // Find the user in the database
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {
-            // Check if there are saved links
             if (user.links.length > 0) {
                 let message = "Here are your saved links:\n";
                 for (let link of user.links) {
@@ -54,10 +49,8 @@ async function savedLinkCommand(ctx) {
 async function savedTaleCommand(ctx) {
     const chatId = ctx.chat.id;
     try {
-        // Find the user in the database
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {
-            // Check if there are saved tales
             if (user.tales.length > 0) {
                 let message = "Here are your saved tales:\n";
                 for (let tale of user.tales) {

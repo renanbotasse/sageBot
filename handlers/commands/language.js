@@ -4,7 +4,6 @@ async function languageCommand(ctx) {
     const chatId = ctx.chat.id;
     const messageText = "Please select your preferred language by clicking on one of the flags below:";
     
-    // Send message with emoji flags
     bot.telegram.sendMessage(chatId, messageText, {
         reply_markup: {
             inline_keyboard: [
@@ -26,7 +25,6 @@ async function handleLanguageCallback(ctx) {
         let user = await User.findOne({ id: userId }).exec();
         
         if (user) {
-            // Update user's language preference
             user.language = languageCode;
             await user.save();
             bot.telegram.sendMessage(ctx.chat.id, "Your language preference has been fine-tuned. Excellent choice! 🌟");

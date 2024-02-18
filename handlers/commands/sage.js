@@ -4,12 +4,11 @@ const chatbotPrompts = require("../../constant/chatbotPrompts");
 async function sageCommand(ctx) {
     const chatId = ctx.chat.id;
     const messageText = ctx.message.text + "Answer with less than 100 words";
-    let concatenatedResponse = ""; // Initialize an empty string to accumulate the response
+    let concatenatedResponse = "";
     if (ctx.message.text === "/sage") {
         bot.telegram.sendMessage(chatId, chatbotPrompts.greeting);
     } else {
         try {
-        // Send message to Cohere AI using the cohere instance
             const chatStream = await cohere.chatStream({
                 model: "command-light",
                 promptTruncation: "AUTO",
@@ -19,12 +18,11 @@ async function sageCommand(ctx) {
                 message: messageText,
                 connectors: [
                 { id: "web-search", options: { site: "https://en.wikipedia.org/" } },
-                ], // Other parameters as needed
+                ],
             });
-        // Listen for responses from Cohere AI
             for await (const message of chatStream) {
                 if (message.eventType === "text-generation") {
-                    concatenatedResponse += message.text; // Concatenate the text from each message
+                    concatenatedResponse += message.text; 
                 }
             }
         bot.telegram.sendMessage(chatId, concatenatedResponse);

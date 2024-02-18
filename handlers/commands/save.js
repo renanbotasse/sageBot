@@ -5,19 +5,15 @@ async function saveLinkCommand(ctx) {
     const messageIdToSave = ctx.update.message.text.split("_")[2];
 
     try {
-        // Procurar a mensagem no backup do usuário
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {
             const messageToSave = user.backupMessages.find(msg => msg.messageId === messageIdToSave);
             if (messageToSave) {
-                // Salvar a mensagem no banco de dados
                 let savedLink = { messageId: messageIdToSave, text: messageToSave.text };
                 user.links.push(savedLink);
                 await user.save();
-                // Remover a mensagem do backup do usuário
                 user.backupMessages.pull(messageToSave);
                 await user.save();
-                // Responder ao usuário que o link foi salvo com sucesso
                 bot.telegram.sendMessage(chatId, "Link saved successfully.");
             } else {
                 bot.telegram.sendMessage(chatId, "Oops! It looks like the message you're looking for couldn't be found in the backup");
@@ -36,19 +32,15 @@ async function saveTaleCommand(ctx) {
     const messageIdToSave = ctx.update.message.text.split("_")[2];
  
     try {
-        // Procurar a mensagem no backup do usuário
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {
             const messageToSave = user.backupMessages.find(msg => msg.messageId === messageIdToSave);
             if (messageToSave) {
-                // Salvar a mensagem no banco de dados
                 let savedTale = { messageId: messageIdToSave, text: messageToSave.text };
                 user.tales.push(savedTale);
                 await user.save();
-                // Remover a mensagem do backup do usuário
                 user.backupMessages.pull(messageToSave);
                 await user.save();
-                // Responder ao usuário que o conto foi salvo com sucesso
                 bot.telegram.sendMessage(chatId, "Tale saved! Another story added to our collection. 📚🌟");
             } else {
                 bot.telegram.sendMessage(chatId, "Ops! It looks like we can't save this story right now. 📚🌟");
@@ -67,19 +59,15 @@ async function saveListCommand(ctx) {
     const messageIdToSave = ctx.update.message.text.split("_")[2];
 
     try {
-        // Procurar a mensagem no backup do usuário
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {
             const messageToSave = user.backupMessages.find(msg => msg.messageId === messageIdToSave);
             if (messageToSave) {
-                // Salvar a mensagem no banco de dados
                 let savedList = { messageId: messageIdToSave, text: messageToSave.text };
                 user.lists.push(savedList);
                 await user.save();
-                // Remover a mensagem do backup do usuário
                 user.backupMessages.pull(messageToSave);
                 await user.save();
-                // Responder ao usuário que a lista foi salva com sucesso
                 bot.telegram.sendMessage(chatId, "List saved successfully! 📋 Now we're talking! 🚀");
             } else {
                 bot.telegram.sendMessage(chatId, "Message not found in the backup. Did it vanish into thin air? 🌪️");

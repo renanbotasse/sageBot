@@ -1,4 +1,3 @@
-
 const { bot } = require("../../bot/index");
 
 async function androidCommand(ctx) {

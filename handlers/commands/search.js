@@ -25,7 +25,6 @@ async function searchCommand(ctx) {
                     message += `[${topics[i]}](${urls[i]})\n`;
                 }
                 let messageWithSaveOption = `${message}\n\nTo save this list, use /save_list_${messageId}`;
-                // Salvar a mensagem de resposta no banco de dados de backup
                 let user = await User.findOne({ id: chatId }).exec();
                 if (user) {
                     let savedMessage = { messageId: messageId, text: messageWithSaveOption };

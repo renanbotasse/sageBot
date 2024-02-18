@@ -7,8 +7,7 @@ async function taleCommand(ctx) {
 
     try {
         const messageText = "Create a tale for me about: " + ctx.update.message.text + "The history may have a minimum of 100 words and maximum of 1000 words.";
-        let concatenatedResponse = ""; // Inicializar uma string vazia para acumular a resposta
-        // Send message to Cohere AI using the cohere instance
+        let concatenatedResponse = "";
         const chatStream = await cohere.chatStream({
             model: "command-light",
             promptTruncation: "AUTO",
@@ -20,7 +19,6 @@ async function taleCommand(ctx) {
                 { id: "web-search", options: { site: "https://en.wikipedia.org/" } },
             ], // Other parameters as needed
         });
-        // Listen for responses from Cohere AI
         for await (const message of chatStream) {
             if (message.eventType === "text-generation") {
                 concatenatedResponse += message.text; // Concatenate the text from each message
@@ -28,7 +26,6 @@ async function taleCommand(ctx) {
         }
         let taleWithSaveOption = `${concatenatedResponse}\n\nTo save this tale, use /save_tale_${messageId}`;
 
-        // Salvar a mensagem de resposta no banco de dados de backup
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {
             let savedMessage = { messageId: messageId, text: taleWithSaveOption };

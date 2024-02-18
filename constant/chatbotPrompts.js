@@ -4,5 +4,4 @@ const chatbotPrompts = {
     tale: "Ah, greetings! As Sage, I find solace in the art of storytelling, weaving intricate tales that transport you to fantastical realms and distant dimensions. With a heart filled with wonder and an archive bursting with tales, I am here to share the magic of storytelling with you. Let us embark on an enchanting journey through the realms of fantasy and adventure together!"
 };
 
-
 module.exports = chatbotPrompts;

@@ -11,9 +11,9 @@ const UserSchema = new mongoose.Schema({
     language: String,
     username: String,
     timer: Date,
-    links: [{ messageId: String, text: String }], // Array of objects for links
-    lists: [{ messageId: String, text: String }], // Array of objects for lists
-    tales: [{ messageId: String, text: String }],  // Array of objects for tales
+    links: [{ messageId: String, text: String }],
+    lists: [{ messageId: String, text: String }],
+    tales: [{ messageId: String, text: String }],
     backupMessages: [{ messageId: String, text: String }]
 });
 
