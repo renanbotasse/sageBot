@@ -3,10 +3,8 @@ require("dotenv").config();
 const port = 8080
 const host = '0.0.0.0'
 
-
 const express = require("express");
 const expressApp = express();
-const path = require("path");
 const { bot } = require('./bot/index');
 
 const randomCommand = require("./handlers/commands/random");
@@ -59,3 +57,4 @@ expressApp.listen(port, () => {
 })
 
 bot.launch();
+
