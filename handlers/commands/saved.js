@@ -55,7 +55,6 @@ async function savedTaleCommand(ctx) {
                 let message = "Here are your saved tales:\n";
                 for (let tale of user.tales) {
                     message += `- ${tale.text}\n\n`;
-                    console.log(message)
                 }
                 bot.telegram.sendMessage(chatId, message);
             } else {

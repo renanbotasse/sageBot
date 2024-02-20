@@ -3,7 +3,6 @@ const { bot, User } = require('../../bot/index');
 async function deleteCommand(ctx) {
     const chatId = ctx.chat.id;
     const itemIdToDelete = ctx.update.message.text.split("_")[1];
-    console.log(itemIdToDelete);
     try {
         let user = await User.findOne({ id: chatId }).exec();
         if (user) {

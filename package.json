@@ -10,6 +10,7 @@
   "author": "Renan Botasse <renanbotasse@gmail.com>",
   "license": "AGPL-3.0",
   "dependencies": {
+    "@grpc/grpc-js": "^1.10.1",
     "axios": "^1.6.7",
     "cohere-ai": "^7.7.5",
     "dotenv": "^16.4.4",

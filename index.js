@@ -1,4 +1,9 @@
 require("dotenv").config();
+
+const port = 8080
+const host = '0.0.0.0'
+
+
 const express = require("express");
 const expressApp = express();
 const path = require("path");
@@ -19,6 +24,8 @@ const unmatchedCommand = require("./handlers/commands/unmatched");
 
 expressApp.use(express.static("static"));
 expressApp.use(express.json());
+
+
 
 //wikipedia
 bot.command('random', randomCommand);
@@ -46,5 +53,9 @@ bot.command(/delete_\d+/, deleteCommand);
 bot.on('message', async (ctx) => {
     await unmatchedCommand(ctx);
 });
+
+expressApp.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+})
 
 bot.launch();
